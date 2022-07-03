@@ -26,6 +26,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+/**
+ * 启动
+ */
 @SpringBootApplication
 public class SampleTomcatApplication {
 
