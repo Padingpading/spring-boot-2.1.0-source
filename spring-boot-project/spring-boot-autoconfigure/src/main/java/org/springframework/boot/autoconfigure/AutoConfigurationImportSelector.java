@@ -140,6 +140,9 @@ public class AutoConfigurationImportSelector
 		configurations.removeAll(exclusions);
 		// 【3】因为从spring.factories文件获取的自动配置类太多，如果有些不必要的自动配置类都加载进内存，会造成内存浪费，因此这里需要进行过滤
 		// 注意这里会调用AutoConfigurationImportFilter的match方法来判断是否符合@ConditionalOnBean,@ConditionalOnClass或@ConditionalOnWebApplication，后面会重点分析一下
+		//@ConditionalOnBean:
+		//@ConditionalOnClass:
+		//@ConditionalOnWebApplication:
 		configurations = filter(configurations, autoConfigurationMetadata);
 		// 【4】获取了符合条件的自动配置类后，此时触发AutoConfigurationImportEvent事件，
 		// 目的是告诉ConditionEvaluationReport条件评估报告器对象来记录符合条件的自动配置类
@@ -283,7 +286,7 @@ public class AutoConfigurationImportSelector
 		boolean[] skip = new boolean[candidates.length];
 		boolean skipped = false;
 		// getAutoConfigurationImportFilters方法：拿到OnBeanCondition，OnClassCondition和OnWebApplicationCondition
-		// 然后遍历这三个条件类去过滤从spring.factories加载的大量配置类
+		// 然后遍历这三个条件类去过滤从spring.factories加载的大量配置类  spring-boot-autoconfigure的meta-inf下。
 		for (AutoConfigurationImportFilter filter : getAutoConfigurationImportFilters()) {
 			// 调用各种aware方法，将beanClassLoader,beanFactory等注入到filter对象中，
 			// 这里的filter对象即OnBeanCondition，OnClassCondition或OnWebApplicationCondition
@@ -292,6 +295,9 @@ public class AutoConfigurationImportSelector
 			// @ConditionalOnClass,@ConditionalOnBean和@ConditionalOnWebApplication里面的注解值）是否匹配，
 			// 注意candidates数组与match数组一一对应
 			/* *********************【重点关注】******************************* */
+/*			org.springframework.boot.autoconfigure.condition.OnBeanCondition
+			org.springframework.boot.autoconfigure.condition.OnClassCondition
+			org.springframework.boot.autoconfigure.condition.OnWebApplicationCondition*/
 			boolean[] match = filter.match(candidates, autoConfigurationMetadata);
 			// 遍历match数组，注意match顺序跟candidates的自动配置类一一对应
 			for (int i = 0; i < match.length; i++) {

@@ -54,7 +54,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
 
-/**
+/**是否实例化取决于 Condition bean是否在容器中存在。
  * {@link Condition} that checks for the presence or absence of specific beans.
  *
  * @author Phillip Webb
@@ -80,7 +80,7 @@ class OnBeanCondition extends FilteringSpringBootCondition
 	public ConfigurationPhase getConfigurationPhase() {
 		return ConfigurationPhase.REGISTER_BEAN;
 	}
-
+	//筛选出ConditionalOnBean注解的类。
 	@Override
 	protected final ConditionOutcome[] getOutcomes(String[] autoConfigurationClasses,
 			AutoConfigurationMetadata autoConfigurationMetadata) {
